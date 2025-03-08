@@ -6,8 +6,8 @@ local Window = OrionLib:MakeWindow({
     ConfigFolder = "N3kolZTest"
 })
 
-local PlayerTab = Window:MakeTab({
-    Name = "То что нужно",
+local GraphicTab = Window:MakeTab({
+    Name = "Графіка",
     Icon = "rbxassetid://17404114716",
     PremiumOnly = false
 })

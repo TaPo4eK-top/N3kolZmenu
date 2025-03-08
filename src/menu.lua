@@ -15,22 +15,23 @@ local GraphicTab = Window:MakeTab({
 -- Получаем службу освещения
 local Lighting = game:GetService("Lighting")
 
--- Функция для изменения состояния эффектов
-local function ToggleGraphics(state)
+-- Функция для переключения эффектов
+local function toggleGraphics(state)
     Lighting.BloomEffect.Enabled = state
     Lighting.ColorCorrection.Enabled = state
     Lighting.BlurEffect.Enabled = state
     Lighting.SunRays.Enabled = state
 end
 
--- Переключатель для управления эффектами
+-- Создаем переключатель
 GraphicTab:AddToggle({
     Name = "Тінь",
     Default = false,
-    Callback = function(value)
-        ToggleGraphics(value)
+    Callback = function(state)
+        toggleGraphics(not state) -- Если включено, то отключаем эффекты, если выключено, то включаем
     end
 })
+
 
 local PlayerTab = Window:MakeTab({
     Name = "Гравець",

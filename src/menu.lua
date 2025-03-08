@@ -25,7 +25,7 @@ end
 
 -- Переключатель для управления эффектами
 GraphicTab:AddToggle({
-    Name = "Графічні ефекти",
+    Name = "Тінь",
     Default = false,
     Callback = function(value)
         ToggleGraphics(value)

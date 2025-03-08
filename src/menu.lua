@@ -12,8 +12,10 @@ local GraphicTab = Window:MakeTab({
     PremiumOnly = false
 })
 
-local ShadowsEnabled = false -- Переменная для отслеживания состояния теней
+local ShadowsEnabled = false
+local BrightnessEnabled = false
 
+-- Функція для увімкнення/вимкнення тіней
 local function SetShadows(state)
     game:GetService("Lighting").GlobalShadows = state
     for _, object in pairs(workspace:GetDescendants()) do
@@ -23,12 +25,40 @@ local function SetShadows(state)
     end
 end
 
+-- Функція для увімкнення/вимкнення додаткового освітлення
+local function SetFullBright(state)
+    local lighting = game:GetService("Lighting")
+
+    if state then
+        lighting.Brightness = 3
+        lighting.Ambient = Color3.new(1, 1, 1)
+        lighting.OutdoorAmbient = Color3.new(1, 1, 1)
+        lighting.Technology = Enum.Technology.Future
+    else
+        lighting.Brightness = 1
+        lighting.Ambient = Color3.new(0, 0, 0)
+        lighting.OutdoorAmbient = Color3.new(0, 0, 0)
+        lighting.Technology = Enum.Technology.Compatibility
+    end
+end
+
+-- Тогл для тіней
 GraphicTab:AddToggle({
     Name = "Тінь",
     Default = false,
     Callback = function(value)
-        ShadowsEnabled = not value
+        ShadowsEnabled = value
         SetShadows(ShadowsEnabled)
+    end
+})
+
+-- Тогл для додаткового освітлення
+GraphicTab:AddToggle({
+    Name = "Додаткове освітлення",
+    Default = false,
+    Callback = function(value)
+        BrightnessEnabled = value
+        SetFullBright(BrightnessEnabled)
     end
 })
 

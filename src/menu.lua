@@ -12,40 +12,23 @@ local GraphicTab = Window:MakeTab({
     PremiumOnly = false
 })
 
-local player = game:GetService("Players").LocalPlayer
-local immortalityEnabled = false
-local immortalityConnection
+-- Получаем службу освещения
+local Lighting = game:GetService("Lighting")
 
-local function makeImmortal(character)
-    if immortalityEnabled then
-        local humanoid = character:FindFirstChildOfClass("Humanoid")
-        if humanoid then
-            immortalityConnection = humanoid.HealthChanged:Connect(function()
-                humanoid.Health = humanoid.MaxHealth
-            end)
-        end
-    end
+-- Функция для изменения состояния эффектов
+local function ToggleGraphics(state)
+    Lighting.BloomEffect.Enabled = state
+    Lighting.ColorCorrection.Enabled = state
+    Lighting.BlurEffect.Enabled = state
+    Lighting.SunRays.Enabled = state
 end
 
-local function toggleImmortality(state)
-    immortalityEnabled = state
-    if state then
-        if player.Character then
-            makeImmortal(player.Character)
-        end
-        player.CharacterAdded:Connect(makeImmortal)
-    else
-        if immortalityConnection then
-            immortalityConnection:Disconnect()
-        end
-    end
-end
-
+-- Переключатель для управления эффектами
 GraphicTab:AddToggle({
-    Name = "Бессмертие",
+    Name = "Графічні ефекти",
     Default = false,
     Callback = function(value)
-        toggleImmortality(value)
+        ToggleGraphics(value)
     end
 })
 

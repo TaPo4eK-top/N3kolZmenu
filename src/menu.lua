@@ -1,13 +1,13 @@
-local OrionLib = loadstring(game:HttpGet('https://raw.githubusercontent.com/TaPo4eK-top/N3kolZmenu/main/src/menu.lua'))()
+local OrionLib = loadstring(game:HttpGet('https://raw.githubusercontent.com/TaPo4eK-top/N3kolZlib/main/source/N3kolZ_library'))()
 
 local Window = OrionLib:MakeWindow({
     Name = "N3kolZHub", 
     HidePremium = false, 
-    ConfigFolder = "KlorPeTest"
+    ConfigFolder = "N3kolZTest"
 })
 
 local PlayerTab = Window:MakeTab({
-    Name = "То что тебе нужно",
+    Name = "То что нужно",
     Icon = "rbxassetid://17404114716",
     PremiumOnly = false
 })

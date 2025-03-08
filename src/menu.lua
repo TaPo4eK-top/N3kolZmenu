@@ -12,23 +12,23 @@ local GraphicTab = Window:MakeTab({
     PremiumOnly = false
 })
 
--- Получаем службу освещения
-local Lighting = game:GetService("Lighting")
+local ShadowsEnabled = false -- Переменная для отслеживания состояния теней
 
--- Функция для переключения эффектов
-local function toggleGraphics(state)
-    Lighting.BloomEffect.Enabled = state
-    Lighting.ColorCorrection.Enabled = state
-    Lighting.BlurEffect.Enabled = state
-    Lighting.SunRays.Enabled = state
+local function SetShadows(state)
+    game:GetService("Lighting").GlobalShadows = state
+    for _, object in pairs(workspace:GetDescendants()) do
+        if object:IsA("BasePart") then
+            object.CastShadow = state
+        end
+    end
 end
 
--- Создаем переключатель
 GraphicTab:AddToggle({
     Name = "Тінь",
     Default = false,
-    Callback = function(state)
-        toggleGraphics(not state) -- Если включено, то отключаем эффекты, если выключено, то включаем
+    Callback = function(value)
+        ShadowsEnabled = not value
+        SetShadows(ShadowsEnabled)
     end
 })
 

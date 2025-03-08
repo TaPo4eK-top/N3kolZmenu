@@ -12,47 +12,31 @@ local GraphicTab = Window:MakeTab({
     PremiumOnly = false
 })
 
-local ShadowsEnabled = false
+local Lighting = game:GetService("Lighting")
 local BrightnessEnabled = false
 
--- Функція для увімкнення/вимкнення тіней
-local function SetShadows(state)
-    game:GetService("Lighting").GlobalShadows = state
-    for _, object in pairs(workspace:GetDescendants()) do
-        if object:IsA("BasePart") then
-            object.CastShadow = state
-        end
-    end
-end
+-- Збережемо початкові налаштування освітлення
+local DefaultBrightness = Lighting.Brightness
+local DefaultAmbient = Lighting.Ambient
+local DefaultOutdoorAmbient = Lighting.OutdoorAmbient
+local DefaultTechnology = Lighting.Technology
 
 -- Функція для увімкнення/вимкнення додаткового освітлення
 local function SetFullBright(state)
-    local lighting = game:GetService("Lighting")
-
     if state then
-        lighting.Brightness = 3
-        lighting.Ambient = Color3.new(1, 1, 1)
-        lighting.OutdoorAmbient = Color3.new(1, 1, 1)
-        lighting.Technology = Enum.Technology.Future
+        Lighting.Brightness = 3
+        Lighting.Ambient = Color3.new(1, 1, 1)
+        Lighting.OutdoorAmbient = Color3.new(1, 1, 1)
+        Lighting.Technology = Enum.Technology.Future
     else
-        lighting.Brightness = 1
-        lighting.Ambient = Color3.new(0, 0, 0)
-        lighting.OutdoorAmbient = Color3.new(0, 0, 0)
-        lighting.Technology = Enum.Technology.Compatibility
+        Lighting.Brightness = DefaultBrightness
+        Lighting.Ambient = DefaultAmbient
+        Lighting.OutdoorAmbient = DefaultOutdoorAmbient
+        Lighting.Technology = DefaultTechnology
     end
 end
 
--- Тогл для тіней
-GraphicTab:AddToggle({
-    Name = "Тінь",
-    Default = false,
-    Callback = function(value)
-        ShadowsEnabled = value
-        SetShadows(ShadowsEnabled)
-    end
-})
-
--- Тогл для додаткового освітлення
+-- Тогл для увімкнення/вимкнення освітлення
 GraphicTab:AddToggle({
     Name = "Додаткове освітлення",
     Default = false,

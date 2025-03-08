@@ -8,6 +8,6 @@ local Window = OrionLib:MakeWindow({
 
 local GraphicTab = Window:MakeTab({
     Name = "Графіка",
-    Icon = "rbxassetid://17404114716",
+    Icon = "rbxassetid://17404114716", 
     PremiumOnly = false
 })
